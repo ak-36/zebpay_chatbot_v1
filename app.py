@@ -10,6 +10,7 @@ from llama_index.core.memory import ChatMemoryBuffer
 from llama_index.core import DocumentSummaryIndex
 from llama_index.core.node_parser import SentenceSplitter
 import csv
+import openai
 
 # Define Streamlit app layout and title
 st.set_page_config(page_title="Cryptocurrency Chatbot", page_icon="💬", layout="centered")
