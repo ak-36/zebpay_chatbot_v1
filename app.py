@@ -84,11 +84,11 @@ if st.session_state.messages[-1]["role"] != "assistant":
             esc_response = esc_engine.chat(esc_input)
             if str(esc_response).lower() == "true":
                 # response_text = " ".join(token for token in response.response_gen) + "\nConnecting you with customer support"
-                response_text = str(response.response) + "\nConnecting you with customer support"
-                st.write(response_text)
+                response = str(response.response) + "\nConnecting you with customer support"
+                st.write(response)
             else:
                 # response_text = " ".join(token for token in response.response_gen)
                 st.write(response.response)
             # st.write(response_text)
-            message = {"role": "assistant", "content": response}
+            message = {"role": "assistant", "content": response.response}
             st.session_state.messages.append(message)  # Add response to message history
