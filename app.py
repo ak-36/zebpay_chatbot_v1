@@ -88,7 +88,7 @@ if st.session_state.messages[-1]["role"] != "assistant":
                 st.write(response_text)
             else:
                 # response_text = " ".join(token for token in response.response_gen)
-                response_text = response.response
+                response_text = str(response.response)
                 st.write(response_text)
             # st.write(response_text)
             message = {"role": "assistant", "content": response_text}
