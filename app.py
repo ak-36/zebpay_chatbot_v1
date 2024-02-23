@@ -38,7 +38,7 @@ def CEngine():
     return chat_engine
 
 @st.cache_resource(show_spinner=False)
-def EscalationEngine(memory):
+def EscalationEngine():
     reader = SimpleDirectoryReader(
         input_files=["chat_history.docx"]
     )
@@ -46,6 +46,7 @@ def EscalationEngine(memory):
     esc_llm = OpenAI(model="gpt-4")
     service_context = ServiceContext.from_defaults(llm=esc_llm, embed_model="local:BAAI/bge-small-en-v1.5")
     vector_index = VectorStoreIndex.from_documents(docs, service_context=service_context)
+    memory = ChatMemoryBuffer.from_defaults(token_limit=15000)
     chat_engine = vector_index.as_chat_engine(
         chat_mode="context",
         memory=memory,
@@ -57,8 +58,7 @@ def EscalationEngine(memory):
 
 
 chat_engine = CEngine()
-esc_memory = ChatMemoryBuffer.from_defaults(token_limit=15000)
-esc_engine = EscalationEngine(esc_memory)
+esc_engine = EscalationEngine()
 
 # Streamlit chat interface
 if "messages" not in st.session_state:
