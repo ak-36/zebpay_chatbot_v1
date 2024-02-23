@@ -15,6 +15,10 @@ import openai
 # Define Streamlit app layout and title
 st.set_page_config(page_title="Cryptocurrency Chatbot", page_icon="💬", layout="centered")
 st.title("Cryptocurrency Chatbot 💬")
+if "messages" not in st.session_state.keys(): # Initialize the chat messages history
+    st.session_state.messages = [
+        {"role": "assistant", "content": "If you are facing any issues or want any information on cryptocurrency let me know!"}
+    ]
 openai.api_key = st.secrets.openai_key
 portkey_key = st.secrets.portkey_key
 # Define chat engine creation function
@@ -60,9 +64,6 @@ def EscalationEngine():
 chat_engine = CEngine()
 esc_engine = EscalationEngine()
 
-# Streamlit chat interface
-if "messages" not in st.session_state:
-    st.session_state.messages = []
 
 if prompt := st.chat_input("Your question"):  # Prompt for user input and save to chat history
     st.session_state.messages.append({"role": "user", "content": prompt})
