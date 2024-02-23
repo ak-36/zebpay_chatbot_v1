@@ -64,19 +64,24 @@ esc_engine = EscalationEngine()
 if "messages" not in st.session_state:
     st.session_state.messages = []
 
-user_input = st.text_input("Enter your query:", key="user_input")
+if prompt := st.chat_input("Your question"):  # Prompt for user input and save to chat history
+    st.session_state.messages.append({"role": "user", "content": prompt})
 
-if st.button("Send"):
-    if user_input.lower() == "exit":
-        st.stop()
-    response = chat_engine.stream_chat(user_input)
-    esc_input = f"User Query: {user_input}, Bot Response: {response}"
-    esc_response = esc_engine.chat(esc_input)
-    if str(esc_response).lower() == "true":
-        st.session_state.messages.append({"user": user_input, "bot": " ".join(token for token in response.response_gen) + "\nConnecting you with customer support"})
-    else:
-        st.session_state.messages.append({"user": user_input, "bot": " ".join(token for token in response.response_gen)})
+for message in st.session_state.messages:  # Display the prior chat messages
+    with st.chat_message(message["role"]):
+        st.write(message["content"])
 
-for message in st.session_state.messages:
-    st.write(f"User: {message['user']}")
-    st.write(f"Bot: {message['bot']}")
+# If last message is not from assistant, generate a new response
+if st.session_state.messages[-1]["role"] != "assistant":
+    with st.chat_message("assistant"):
+        with st.spinner("Thinking..."):
+            response = chat_engine.stream_chat(prompt)
+            esc_input = f"User Query: {prompt}, Bot Response: {response}"
+            esc_response = esc_engine.chat(esc_input)
+            if str(esc_response).lower() == "true":
+                response_text = " ".join(token for token in response.response_gen) + "\nConnecting you with customer support"
+            else:
+                response_text = " ".join(token for token in response.response_gen)
+            st.write(response_text)
+            message = {"role": "assistant", "content": response_text}
+            st.session_state.messages.append(message)  # Add response to message history
