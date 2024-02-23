@@ -17,7 +17,7 @@ portkey_key = st.secrets.portkey_key
 st.session_state.clear()
 
 # Define Streamlit app layout and title
-st.set_page_config(page_title="Cryptocurrency Chatbot", page_icon="💬", layout="centered")
+st.set_page_config(page_title="Cryptocurrency Chatbot", page_icon="💬", layout="centered", initial_sidebar_state="auto", menu_items=None)
 st.title("Cryptocurrency Chatbot 💬")
 if "messages" not in st.session_state.keys(): # Initialize the chat messages history
     st.session_state.messages = [
