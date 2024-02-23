@@ -88,7 +88,7 @@ if st.session_state.messages[-1]["role"] != "assistant":
                 st.write(response_text)
             else:
                 # response_text = " ".join(token for token in response.response_gen)
-                st.write(response)
+                st.write(response.response)
             # st.write(response_text)
             message = {"role": "assistant", "content": response}
             st.session_state.messages.append(message)  # Add response to message history
