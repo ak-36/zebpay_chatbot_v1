@@ -13,6 +13,9 @@ import csv
 import openai
 openai.api_key = st.secrets.openai_key
 portkey_key = st.secrets.portkey_key
+
+st.session_state.clear()
+
 # Define Streamlit app layout and title
 st.set_page_config(page_title="Cryptocurrency Chatbot", page_icon="💬", layout="centered")
 st.title("Cryptocurrency Chatbot 💬")
