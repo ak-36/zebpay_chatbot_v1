@@ -3,3 +3,4 @@ portkey-ai
 llama-index-embeddings-huggingface
 docx2txt
 streamlit
+openai
