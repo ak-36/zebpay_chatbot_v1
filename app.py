@@ -11,7 +11,8 @@ from llama_index.core import DocumentSummaryIndex
 from llama_index.core.node_parser import SentenceSplitter
 import csv
 import openai
-
+openai.api_key = st.secrets.openai_key
+portkey_key = st.secrets.portkey_key
 # Define Streamlit app layout and title
 st.set_page_config(page_title="Cryptocurrency Chatbot", page_icon="💬", layout="centered")
 st.title("Cryptocurrency Chatbot 💬")
@@ -19,8 +20,7 @@ if "messages" not in st.session_state.keys(): # Initialize the chat messages his
     st.session_state.messages = [
         {"role": "assistant", "content": "If you are facing any issues or want any information on cryptocurrency let me know!"}
     ]
-openai.api_key = st.secrets.openai_key
-portkey_key = st.secrets.portkey_key
+
 # Define chat engine creation function
 @st.cache_resource(show_spinner=False)
 def CEngine():
