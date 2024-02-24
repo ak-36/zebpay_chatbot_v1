@@ -53,10 +53,10 @@ def EscalationEngine():
     esc_llm = OpenAI(model="gpt-4")
     service_context = ServiceContext.from_defaults(llm=esc_llm, embed_model="local:BAAI/bge-small-en-v1.5")
     vector_index = VectorStoreIndex.from_documents(docs, service_context=service_context)
-    memory = ChatMemoryBuffer.from_defaults(token_limit=15000)
+    # memory = ChatMemoryBuffer.from_defaults(token_limit=15000)
     chat_engine = vector_index.as_chat_engine(
         chat_mode="context",
-        memory=memory,
+        # memory=memory,
         system_prompt=(
             "Your role is to analyze the conversation, and see if the user needs an escalation to customer executive support or not. Return True if escalation needed else return False."
         ),
