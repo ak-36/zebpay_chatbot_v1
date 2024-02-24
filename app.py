@@ -84,7 +84,8 @@ if st.session_state.messages[-1]["role"] != "assistant":
             esc_response = esc_engine.chat(esc_input)
             if str(esc_response).lower() == "true":
                 # response_text = " ".join(token for token in response.response_gen) + "\nConnecting you with customer support"
-                response_text = str(response.response) + "\nConnecting you with customer support"
+                # response_text = str(response.response) + "\nConnecting you with customer support"
+                response_text = "Connecting you with customer support!"
                 st.write(response_text)
             else:
                 # response_text = " ".join(token for token in response.response_gen)
